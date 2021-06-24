@@ -17,8 +17,9 @@ public class SplineWalker : MonoBehaviour
 
 	private void Update()
 	{
-		if (goingForward)
+		if (Input.GetKey(KeyCode.W))
 		{
+
 			progress += Time.deltaTime / duration;
 			if (progress > 1f)
 			{
@@ -37,13 +38,19 @@ public class SplineWalker : MonoBehaviour
 				}
 			}
 		}
-		else
+		else if (Input.GetKey(KeyCode.S))
 		{
-			progress -= Time.deltaTime / duration;
-			if (progress < 0f)
 			{
-				progress = -progress;
-				goingForward = true;
+				progress -= Time.deltaTime / duration;
+				if (progress < 0f)
+				{
+					if (mode == SplineWalkerMode.Loop)
+					{
+						progress = -1f;
+					}
+					progress = -progress;
+					goingForward = true;
+				}
 			}
 		}
 
@@ -53,5 +60,7 @@ public class SplineWalker : MonoBehaviour
 		{
 			transform.LookAt(position + spline.GetDirection(progress));
 		}
+
+		
 	}
 }
